@@ -1,0 +1,15 @@
+import requests
+from bs4 import BeautifulSoup
+
+result = requests.get("https://sport.onet.pl/pilka-nozna/liga-mistrzow/tabele/?tid=hdejm")
+src = result.content
+soup = BeautifulSoup(src, "html.parser")
+
+
+goal_items = soup.find("tbody")
+
+tr = goal_items.find_all("tr")
+for goal in tr:
+    name = goal.find_all("td")[1].text.strip()
+    ranking = goal.find_all("td")[4].text.strip()
+    print(name, ranking)
